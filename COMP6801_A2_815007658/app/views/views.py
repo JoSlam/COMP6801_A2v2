@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 def index(request):
     name = "joslam"
-    return render(request, "account/register.html", {'name': name})
+    return render(request, "index.html", {'name': name})

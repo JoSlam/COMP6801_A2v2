@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Login</title>
+</head>
+
+<body>
+
+    {% comment %} Nav bar {% endcomment %}
+    <nav class="navbar navbar-dark bg-dark">
+        <a href="/" class="navbar-brand logo">
+            <i style='font-size: 36px;' class="material-icons">local_movies</i>
+        </a>
+
+        <ul class="justify-content-center nav-fill nav mr-auto">
+
+            <li class="nav-item">
+                <a href="/" class="nav-link">Anime List</a>
+            </li>
+
+            <li class="nav-item">
+                <a href="/anime/add_anime" class="nav-link">Add New Anime</a>
+            </li>
+            <li class="nav-item">
+                <a href="/anime/upload" class="nav-link">Submit CSV file</a>
+            </li>
+            <li class="nav-item">
+                <a href="/anime/search_anime" class="nav-item nav-link">Search Anime</a>
+            </li>
+            <li class="nav-item">
+                <a href="/anime/register" class="nav-item nav-link" style="color: white;">Register</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="container-fluid">
+        <h2 class="display-4">User Login</h2>
+        <form method="POST" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+
+                <label for="u_name">Username:</label>
+                <input type="text" id="username" name="u_name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="p_word">Password:</label>
+                <input type="password" id="pass" name="p_word">
+            
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <h2 class="display-5" style="color: red;">{{ message }}</h2>
+    </div>
+</body>
+
+</html>
