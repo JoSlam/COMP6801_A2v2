@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.views.generic import View
+from django.contrib.auth import authenticate, login, logout
 
 from KDC.models.forms import KDCUserForm
+from KDC.models.forms.KDCUserForm import KDCUserForm
 
 
 def index(request):
@@ -30,19 +33,7 @@ class UserFormView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False)
+            user = self.form_class()
+            user.save(form.cleaned_data['username'], form.cleaned_data['password'])
 
-            # cleaned form data
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user.set_password(password)
-            user.save()
-
-            # check for user in db
-            user = authenticate(username=username, password=password)
-
-            if user is not None:
-                if user.is_active:
-                    # login(request, user)
-                    return redirect('anime:login')
-        return render(request, self.template_name, {'form': form})
+        return redirect("KDC:index")

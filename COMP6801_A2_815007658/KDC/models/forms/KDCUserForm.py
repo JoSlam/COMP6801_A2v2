@@ -1,8 +1,10 @@
-from django.forms import ModelForm
-from KDC.models import KDCUserModel
+from django import forms
+from KDC.models.KDCUser import KDCUser
 
 
-class KDCUserForm(ModelForm):
+class KDCUserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
     class Meta:
-        model = KDCUserModel
+        model = KDCUser
         fields = ['username', 'password']
