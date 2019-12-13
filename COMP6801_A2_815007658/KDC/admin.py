@@ -1,3 +1,4 @@
 from django.contrib import admin
+from KDC.models.KDCUser import KDCUser
 
-# Register your models here.
+admin.site.register(KDCUser)
