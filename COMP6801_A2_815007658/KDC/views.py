@@ -23,9 +23,8 @@ def register_success(request):
     return render(request, "account/register_success.html")
 
 
-class UserFormView(View):
+class UserRegistrationView(View):
     form_class = KDCUserForm
-    form_model = KDCUser
     template_name = 'account/register.html'
 
     # display blank form for signup
@@ -42,4 +41,21 @@ class UserFormView(View):
             new_user.password = hash_value(form.cleaned_data['password'])
             new_user.save()
             
+        return redirect("KDC:register_success")
+
+
+class UserLoginView(View):
+    form_class = KDCUserForm
+    template_name = 'account/login.html'
+
+    # display blank form for login
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    # login user with supplied form info.
+    def post(self, request):
+        form = self.form_class(request.POST)
+        login_user(form)
+
         return redirect("KDC:register_success")

@@ -8,10 +8,10 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="text-center">
+        <div class="form_area">
             
             {% block content %}
-                <h1 class="display-4">User registration</h1>
+                <h1 class="display-4">User Registration</h1>
                 <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
