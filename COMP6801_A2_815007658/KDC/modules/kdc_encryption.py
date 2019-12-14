@@ -1,6 +1,6 @@
 import hashlib
 from django.contrib.auth import login,logout
-from KDC.models.KDCUser import KDCUser
+from KDC.models.User import User
 
 #performs password hash using sha256 hashing algo
 def hash_value(value):
@@ -10,4 +10,5 @@ def hash_value(value):
 
 
 def login_user(user_form):
+    return
     #login user using auth package

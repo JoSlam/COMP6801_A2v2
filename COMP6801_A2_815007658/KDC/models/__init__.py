@@ -1,1 +1,1 @@
-from . import KDCUser
+from . import User

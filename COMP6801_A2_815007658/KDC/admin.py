@@ -1,4 +1,4 @@
 from django.contrib import admin
-from KDC.models.KDCUser import KDCUser
+from KDC.models.User import User
 
-admin.site.register(KDCUser)
+admin.site.register(User)

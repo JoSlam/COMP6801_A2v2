@@ -4,11 +4,9 @@ from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
 from django.utils import timezone
 
-
-from KDC.models.forms.KDCUserForm import KDCUserForm
-from KDC.models.KDCUser import KDCUser
-
 from KDC.modules import *
+from KDC.models.forms.UserForm import UserForm
+from KDC.models.User import User
 
 
 def index(request):
@@ -22,9 +20,12 @@ def login(request):
 def register_success(request):
     return render(request, "account/register_success.html")
 
+def dashboard(request):
+    # get applications registered with kdc
+    return render(request, 'dashboard.html')
 
 class UserRegistrationView(View):
-    form_class = KDCUserForm
+    form_class = UserForm
     template_name = 'account/register.html'
 
     # display blank form for signup
@@ -37,15 +38,13 @@ class UserRegistrationView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.password = hash_value(form.cleaned_data['password'])
-            new_user.save()
+            form.save()
             
         return redirect("KDC:register_success")
 
 
 class UserLoginView(View):
-    form_class = KDCUserForm
+    form_class = UserForm
     template_name = 'account/login.html'
 
     # display blank form for login
@@ -58,4 +57,7 @@ class UserLoginView(View):
         form = self.form_class(request.POST)
         login_user(form)
 
-        return redirect("KDC:register_success")
+        return redirect("KDC:dashboard")
+
+    
+    
