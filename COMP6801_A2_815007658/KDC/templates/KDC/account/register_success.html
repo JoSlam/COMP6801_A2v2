@@ -1,0 +1,21 @@
+{% extends 'KDC/base_page.html' %}
+
+{% block title %} Success {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="display-3">
+        User Registration Successful!
+    </h1>
+    <p class="redirect-text">
+        You will be redirected momentarily.
+        </h1>
+</div>
+{% endblock content %}
+
+<script type="text/javascript">
+    setTimeout(function () {
+        window.location.href = "/kdc/login";
+    }, 2000);
+</script>

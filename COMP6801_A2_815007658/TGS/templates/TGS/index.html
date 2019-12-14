@@ -1,0 +1,26 @@
+{% extends 'TGS/base_page.html' %}
+
+{% block content %}
+    <div class="form_area text-center">
+        <!-- list all apps -->
+        <div class="text-center">
+            <h1 class="display-5">
+                Application Listing
+            </h1>
+            <ul id="app-list" style="list-style-type: none;">
+                
+                {% for app in app_list %}
+                    <li class="app-item"><a href="application/edit/{{ app.id }}">{{ app.name }}</a></li>
+                {% endfor %}
+                    
+            </ul>
+        </div>
+        
+        <!-- create application -->
+        <button class="btn btn-primary" type="button">
+            <a href="create_application/" class="text-white">Register New Application</a>
+        </button>
+    </div>
+
+{% endblock content %}
+    

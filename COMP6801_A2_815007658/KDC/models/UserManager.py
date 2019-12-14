@@ -1,5 +1,4 @@
 from . import *
-from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.hashers import make_password, MD5PasswordHasher
 
@@ -20,7 +19,6 @@ class UserManager(BaseUserManager):
         user_obj.staff = is_staff
         user_obj.active = is_active
         user_obj.admin = is_admin
-        user_obj.date_created = timezone.now()
 
         user_obj.save(using=self._db)
         return user_obj

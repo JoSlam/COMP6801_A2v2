@@ -1,0 +1,21 @@
+{% extends 'KDC/base_page.html' %}
+
+{% block title %} Success {% endblock %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="display-4">
+        {{ message }}
+    </h1>
+    <p class="redirect-text">
+        You will be redirected momentarily.
+    </p>
+</div>
+
+<script type="text/javascript">
+    var url = "{{ redirect_url }}";
+    redirectTime(url, 2000);
+</script>
+{% endblock content %}
+

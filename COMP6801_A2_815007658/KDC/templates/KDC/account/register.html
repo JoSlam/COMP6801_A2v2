@@ -1,0 +1,17 @@
+{% extends 'KDC/base_page.html' %}
+{% block title %} Registration{% endblock title%}
+
+{% block content %}
+<div class="form_area">
+    <h1 class="display-4">User Registration</h1>
+
+    <div class="form-group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+    </div>
+
+</div>
+{% endblock %}

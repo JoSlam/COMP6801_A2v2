@@ -1,0 +1,15 @@
+{% extends 'KDC/base_page.html' %}
+{% block title %} User Login {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+  <div class="form_area">
+    <h1 class="display-4">User Login</h1>
+    <form method="POST">
+      {% csrf_token %} {{ form.as_p }}
+      <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock content %}
+

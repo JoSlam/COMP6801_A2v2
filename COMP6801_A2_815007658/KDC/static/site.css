@@ -8,3 +8,13 @@
   margin-right: auto;
   width: 500px;
 }
+
+.text-white {
+  color: white;
+}
+
+.display-area {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}

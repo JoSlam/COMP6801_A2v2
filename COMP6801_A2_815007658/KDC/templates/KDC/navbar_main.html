@@ -1,0 +1,27 @@
+<nav class="navbar navbar-dark bg-dark">
+    <ul class="justify-content-center nav-fill nav mr-auto">
+        <li class="nav-item active">
+            <a class="nav-item nav-link text-white" href="/">Home</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-item nav-link text-white" href="/kdc/register">User Registration</a>
+        </li>
+
+        {% if user.is_authenticated %}
+        <li class="nav-item active">
+            <span class="text-white" style="padding: 8px 16px;">Logged in as: {{ user }}</span>
+        </li>
+
+        <li class="nav-item active">
+            <a class="nav-item nav-link text-white" href="/kdc/">Dashboard</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-item nav-link text-white" href="/kdc/logout">Logout</a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+            <a class="nav-item nav-link text-white" href="/kdc/login">Login</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

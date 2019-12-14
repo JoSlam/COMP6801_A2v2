@@ -1,0 +1,48 @@
+{% extends 'TGS/base_page.html' %}
+{% block title %} Application {% endblock %}
+
+{% block content %}
+<div class="form_area">
+    <h1 class="display-4">{{ context.display_title }}</h1>
+    
+    {% if app %}
+        <div class="app-details">
+            <h1 class="display-6">
+                Application Details
+            </h1>
+            <table class="table-striped">
+                <tr>
+                    <td><b>Application Name:</b></td>
+                    <td>{{ app.name }}</td>
+                </tr>
+    
+                <tr>
+                    <td><b>Application Key:</b></td>
+                    <td>{{ app.key }}</td>
+                </tr>
+            </table>
+        </div>
+            
+    {% endif %}
+        <br/>
+        <br/>
+
+    {% if form %}
+    <div class="edit-app-details">
+        <h1 class="display-6">
+            Edit Application
+        </h1>   
+    
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+        
+
+</div>
+{% endblock content %}

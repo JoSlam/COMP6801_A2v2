@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from KDC.models.UserManager import UserManager
+from TGS.models.Application import Application
 
 
 class User(AbstractBaseUser):
@@ -10,14 +11,15 @@ class User(AbstractBaseUser):
     active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
-    date_created = models.DateTimeField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    applications = models.ManyToManyField(Application)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
 
-    class Meta:
-        db_table='auth_user'
+    # class Meta:
+    #     db_table='auth_user'
 
 
     def __str__(self):

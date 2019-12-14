@@ -1,0 +1,36 @@
+{% extends 'KDC/base_page.html' %}
+{% block title %} Dashboard {% endblock title %}
+
+{% block content %}
+<div id="available-apps" class="display-area">
+
+    <div id="apps">
+        <h1 class="display-6">Available Applications</h1>
+        
+        {% if available %}
+            <ul id="list" style="list-style-type: none;">
+                {% for app in available %}
+                <li><a href="/tgs/application/{{ app.id }}">{{ app.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <span>No applications exist</span>
+        {% endif %}
+
+        <br/>
+        <br/>
+
+        
+        {% if registered_apps %}
+            <ul id="list" style="list-style-type: none;">
+                {% for app in registered_apps %}
+                <li>{{ app.name }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <span>You have not registered to use any applications</span>
+        {% endif %}
+            
+    </div>
+</div>
+{% endblock content %}

@@ -5,9 +5,8 @@ app_name = 'KDC'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^app/', include('app.urls', namespace='app')),
     url(r'^login/$', views.UserLoginView.as_view(), name='login'),
-    url(r'^dashboard/$', views.dashboard, name='dashboard'),
     url(r'^register/$', views.UserRegistrationView.as_view(), name='register'),
-    url(r'^register_success/$', views.register_success, name='register_success'),
-
 ]
