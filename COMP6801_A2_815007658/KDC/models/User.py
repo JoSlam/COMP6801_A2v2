@@ -12,15 +12,11 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
-    applications = models.ManyToManyField(Application)
+    applications = models.ManyToManyField(to=Application, through="UserApplication")
 
     objects = UserManager()
 
     USERNAME_FIELD = 'username'
-
-    # class Meta:
-    #     db_table='auth_user'
-
 
     def __str__(self):
         return self.username
@@ -49,3 +45,10 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+
+
+class UserApplication(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    application = models.ForeignKey(to=Application, on_delete=models.CASCADE)
+    nonce = models.IntegerField()
+    tgt = models.TextField(verbose_name="Ticket granting ticket")

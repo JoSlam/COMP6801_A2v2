@@ -22,10 +22,17 @@
                 </tr>
             </table>
         </div>
+
+        
+        {% if user.is_authenticated %}
+            <button class="btn btn-primary" type="button"><a href="/tgs/add_app_to_user/{{ app.id }}"><span class="text-white">Add to Apps</span></a></button>
+        {% endif %}
+            
             
     {% endif %}
-        <br/>
-        <br/>
+
+    <br/>
+    <br/>
 
     {% if form %}
     <div class="edit-app-details">

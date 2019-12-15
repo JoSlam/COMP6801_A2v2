@@ -1,10 +1,12 @@
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponseServerError
 
 
 from TGS.models.forms.ApplicationForm import ApplicationForm
 from TGS.models.Application import Application
+from TGS.modules.tgs_supporting import *
 
 from globals.globals import *
 from django.http.response import HttpResponse
@@ -73,3 +75,19 @@ class ApplicationEditView(View):
         context.update({ "redirect_url": "/tgs/application/edit/" + str(app.id) })
         return render(request, "TGS/success.html", context)
         
+
+@login_required(login_url='/kdc/login/')
+def add_app_to_user(request, app_id):
+    # get app from id
+    # gen nonce
+    # add app to user app list
+    # save
+    # return to dashboard
+    user = request.user
+    if user.is_authenticated:
+        app = Application.objects.get(pk=app_id)
+        app_key = app.key
+        nonce = generate_nonce(1000)
+        user.applications.add(app)
+    
+    return redirect("KDC:index")

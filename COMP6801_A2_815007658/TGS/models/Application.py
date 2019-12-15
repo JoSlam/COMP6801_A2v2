@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 
 from uuid import uuid4
+from KDC.models import User
 
 
 class Application(models.Model):

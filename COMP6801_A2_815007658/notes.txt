@@ -1,1 +1,9 @@
 weather app key - weather-app-key123
+
+from KDC.models.User import User, UserApplication
+from TGS.models.Application import Application
+
+use = list(User.objects.all())[0]
+app = list(Application.objects.all())[0]
+
+useApp = UserApplication(user=use, application=app, nonce="12", tgt="1234")

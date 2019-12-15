@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, HttpResponseServerError
+from django.utils import timezone
 from django.views.generic import View
 from django.contrib.auth import authenticate, login, logout
-from django.utils import timezone
+from django.http import HttpResponse, HttpResponseServerError
+from django.shortcuts import render, get_object_or_404, redirect
 
 from KDC.modules import *
 from KDC.models import User
@@ -13,8 +13,12 @@ from globals.globals import *
 
 def index(request):
     context = get_context(request)
+    if request.user.is_authenticated:
+        # registered = request.user.applications.exclude(pk__in=)
+        registered = request.user.applications
+    else:
+        registered = None
     available = Application.objects.all()
-    registered = Application.objects.all()
     context.update({"available": available, "registered": registered})
 
     return render(request, 'KDC/index.html', context)
@@ -63,12 +67,15 @@ class UserLoginView(View):
 
     # login user with supplied form info.
     def post(self, request):
-        form = self.form_class(request.POST)
+        context = get_context(request)
+        user = login_user(request, request.POST.get("username"), request.POST.get("password"))
         
-        if form.is_valid():
-            user = login_user(form.cleaned_data.get("username"), form.cleaned_data.get("password"))
-
-        return redirect("KDC:index")
+        if user:
+            context.update({"message": "Login successful!"})
+            context.update({"redirect_url": "/kdc/"})
+            return render(request, "KDC/success.html", context)
+        else:
+            return HttpResponseServerError()
 
 
 

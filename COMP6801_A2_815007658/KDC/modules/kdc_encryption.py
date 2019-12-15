@@ -1,9 +1,9 @@
-from django.contrib.auth import login,logout, authenticate
+from django.contrib.auth import login, logout, authenticate
 from KDC.models.User import User
 
-def login_user(username, password):
+def login_user(request, username, password):
     # login
-    user = authenticate(username, password)
-    if user:
-        login(username, password)
-    return user
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        login(request=request, user=user)
+    return user if user else None
