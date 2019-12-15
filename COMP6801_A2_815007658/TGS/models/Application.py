@@ -7,7 +7,7 @@ from KDC.models import User
 
 class Application(models.Model):
     name = models.CharField(max_length=255, blank=False, null=False, verbose_name="Application Name")
-    key = models.CharField(max_length=255, blank=False, null=False, unique=True, verbose_name="Application Key")
+    key = models.CharField(max_length=8, blank=False, null=False, unique=True, verbose_name="Application Key")
     date_created = models.DateTimeField()
 
     class Meta:

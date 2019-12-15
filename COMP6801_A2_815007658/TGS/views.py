@@ -8,9 +8,12 @@ from TGS.models.forms.ApplicationForm import ApplicationForm
 from TGS.models.Application import Application
 from TGS.modules.tgs_supporting import *
 
+from KDC.models.User import UserApplication
+
 from globals.globals import *
 from django.http.response import HttpResponse
 
+tgs_key = "tgs-key1"
 
 def index(request):
     context = get_context(request)
@@ -78,16 +81,29 @@ class ApplicationEditView(View):
 
 @login_required(login_url='/kdc/login/')
 def add_app_to_user(request, app_id):
-    # get app from id
-    # gen nonce
-    # add app to user app list
-    # save
-    # return to dashboard
+    context = get_context(request)
     user = request.user
+
     if user.is_authenticated:
         app = Application.objects.get(pk=app_id)
-        app_key = app.key
+
+        #gen nonce and encrypt
         nonce = generate_nonce(1000)
-        user.applications.add(app)
-    
+        encrypted_nonce = encrypt(str(nonce), user.password[:8])
+
+        #encrypt tgt
+        app_key = app.key
+        pre_tgt = user.username + "," + str(nonce)
+        tgt = encrypt(pre_tgt, tgs_key)
+
+        userApp = UserApplication(user=user, application=app, nonce=encrypted_nonce, tgt=tgt)
+        userApp.save()
+
+        context.update({ "message": "Application added to user!" })
+        context.update({ "redirect_url": "/kdc/" })
+
+        return render(request, "TGS/success.html", context)
+
     return redirect("KDC:index")
+    
+    

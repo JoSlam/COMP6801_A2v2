@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^app/', include('app.urls', namespace='app')),
     url(r'^login/$', views.UserLoginView.as_view(), name='login'),
     url(r'^register/$', views.UserRegistrationView.as_view(), name='register'),
+    path('connect/<str:username>', views.connect_to_service, name='connect'),
 
 ]

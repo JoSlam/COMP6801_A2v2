@@ -14,17 +14,19 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <span>No applications exist</span>
+            <span>There are no available applications</span>
         {% endif %}
 
         <br/>
         <br/>
 
-        
-        {% if registered_apps %}
+        <h1 class="display-6">Your Applications</h1>
+        {% if registered %}
             <ul id="list" style="list-style-type: none;">
-                {% for app in registered_apps %}
-                <li>{{ app.name }}</li>
+                {% for app in registered %}
+                <li>
+                    {{ app.name }} --> <button class="btn btn-primary" type="button" onclick="connectToService('/kdc/connect/{{ user.username }}')">Connect</button>
+                </li>
                 {% endfor %}
             </ul>
         {% else %}

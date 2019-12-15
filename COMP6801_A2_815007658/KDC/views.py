@@ -5,20 +5,30 @@ from django.http import HttpResponse, HttpResponseServerError
 from django.shortcuts import render, get_object_or_404, redirect
 
 from KDC.modules import *
-from KDC.models import User
+from KDC.models.User import User, UserApplication
 from KDC.models.forms.UserForms import UserRegistrationForm, UserLoginForm
+
 from TGS.models.Application import Application
+from TGS.modules.tgs_supporting import *
 
 from globals.globals import *
+from django.http.response import JsonResponse
+
+tgs_key = "tgs-key1"
 
 def index(request):
     context = get_context(request)
+    registered_ids = []
+
     if request.user.is_authenticated:
-        # registered = request.user.applications.exclude(pk__in=)
-        registered = request.user.applications
+        registered = request.user.applications.values()
+
+        for app in registered:
+            registered_ids.append(app["id"])
     else:
         registered = None
-    available = Application.objects.all()
+
+    available = Application.objects.exclude(pk__in=registered_ids)
     context.update({"available": available, "registered": registered})
 
     return render(request, 'KDC/index.html', context)
@@ -27,6 +37,26 @@ def logout_user(request):
     if request.user is not None:
         logout(request)
     return redirect('app:index')
+
+
+def connect_to_service(request, username):
+    user = User.objects.get(username=username)
+
+    if user is not None:
+        userApp = UserApplication.objects.get(user=user)
+        encrypted_tgt = userApp.tgt
+
+        #tgs creds
+        tgt = decrypt(encrypted_tgt, tgs_key)
+        tgt_username = tgt.split(",")[0]
+        tgt_nonce = tgt.split(",")[1]
+
+        #user creds
+        nonce = decrypt(userApp.nonce, user.password[:8])
+
+        if nonce == tgt_nonce and user.username == tgt_username:
+            return JsonResponse({ 'data': "You have successfully been authenticated with the application."})
+    return JsonResponse({ 'data': "You have failed to be authenticated by the application." })
 
 
 class UserRegistrationView(View):
@@ -76,6 +106,5 @@ class UserLoginView(View):
             return render(request, "KDC/success.html", context)
         else:
             return HttpResponseServerError()
-
 
 

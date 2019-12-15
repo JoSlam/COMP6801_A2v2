@@ -50,5 +50,5 @@ class User(AbstractBaseUser):
 class UserApplication(models.Model):
     user = models.ForeignKey(to=User, on_delete=models.CASCADE)
     application = models.ForeignKey(to=Application, on_delete=models.CASCADE)
-    nonce = models.IntegerField()
+    nonce = models.TextField()
     tgt = models.TextField(verbose_name="Ticket granting ticket")
